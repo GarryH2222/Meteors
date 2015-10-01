@@ -22,6 +22,10 @@ if (Meteor.isClient) {
     },
     hideCompleted: function () {
       return Session.get("hideCompleted");
+    },
+    incompleteCount: function () {
+
+      return Tasks.find({checked: {$ne: true}}).count();
     }
 
   });
@@ -44,6 +48,7 @@ if (Meteor.isClient) {
     },
     "change .hide-completed input": function (event) {
       Session.set("hideCompleted", event.target.checked);
+
     }
   });
 
@@ -59,6 +64,9 @@ if (Meteor.isClient) {
     "click .delete": function () {
       Tasks.remove(this._id);
     }
+  });
+  Accounts.ui.config({
+    passwordSignupFields: "USERNAME_ONLY"
   });
 
 }
